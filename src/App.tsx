@@ -1,9 +1,10 @@
 import React, { useCallback } from 'react';
-import ReactFlow, { Background, Connection, ConnectionMode, Controls, Node, addEdge, useEdgesState } from 'reactflow';
+import ReactFlow, { Background, Connection, ConnectionMode, Controls, Node, addEdge, useEdgesState, useNodesState } from 'reactflow';
 import 'reactflow/dist/style.css';
 import { zinc } from "tailwindcss/colors";
 import './global.css'
 import ContetntSquare from './components/nodes/content-square';
+import DefaultEdge from './components/edges/Default-edge';
 
 /*
   Notes: 
@@ -13,6 +14,10 @@ import ContetntSquare from './components/nodes/content-square';
 
 const NODE_TYPES = {
   square: ContetntSquare,
+}
+
+const EDGE_TYPES = {
+  default: DefaultEdge,
 }
 
 // data = transporta informações da aplicação até os Nodes
@@ -39,6 +44,7 @@ const INITIAL_NODES = [
 
 function App() {
   const [edges, setEdges, onEdgesChanges] = useEdgesState([]);
+  const [nodes, setNodes, onNodesChanges] = useNodesState(INITIAL_NODES);
 
   const onConnect = useCallback((connection: Connection) => {
     return setEdges(edges => addEdge(connection, edges))
@@ -48,11 +54,16 @@ function App() {
     <div className='w-screen h-screen'>
       <ReactFlow 
       nodeTypes={NODE_TYPES}
-      nodes={INITIAL_NODES}
+      edgeTypes={EDGE_TYPES}
+      nodes={nodes}
       edges={edges}
       onEdgesChange={onEdgesChanges}
       onConnect={onConnect}
+      onNodesChange={onNodesChanges}
       connectionMode={ConnectionMode.Loose}
+      defaultEdgeOptions={{
+        type: 'default'
+      }}
       >
         <Background
           gap={12}
