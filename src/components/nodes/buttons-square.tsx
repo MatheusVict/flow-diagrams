@@ -2,16 +2,21 @@ import { NodeResizer } from '@reactflow/node-resizer';
 import React from 'react'
 import { NodeProps, Handle, Position } from 'reactflow';
 import '@reactflow/node-resizer/dist/style.css';
-import {BiBookContent} from 'react-icons/bi';
+import {AiFillAlert} from 'react-icons/ai';
 
 /*
   Position é um enum, facilita em que ponto do elemento se coloca os handles(As conexões)
 */
 
-const ContetntSquare = ({ selected }: NodeProps) => {
+const ButtonSquare = ({ selected }: NodeProps) => {
   return (
-    <div className='bg-transparent shadow-lg rounded-2xl w-full h-full min-w-[300px] min-h-[150px]'>
-      <h1 className='bg-pink-300 rounded-t'><BiBookContent/>Conteúdo</h1>
+    <div className='rounded-2xl shadow-lg bg-transparent w-full h-full min-w-[300px] min-h-[150px]'>
+      <h1 className='bg-pink-200 rounded-t'><AiFillAlert/>Botões</h1>
+      <div className='text-center mt-6'>
+        <p><strong>Normal de 3 em 3</strong></p>
+        <p className='text-green-600'>Texto da pergunta</p>
+        <hr className='bg-zinc-500 max-w-full'/>
+      </div>
       <NodeResizer 
       minHeight={200}
       minWidth={200}
@@ -50,4 +55,4 @@ const ContetntSquare = ({ selected }: NodeProps) => {
   )
 }
 
-export default ContetntSquare
+export default ButtonSquare

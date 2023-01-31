@@ -1,12 +1,31 @@
 import React, { useCallback } from 'react';
-import ReactFlow, { Background, Connection, ConnectionMode, Controls, Node, addEdge, useEdgesState, useNodesState } from 'reactflow';
+import ReactFlow,
+{
+  Background,
+  Connection, 
+  ConnectionMode, 
+  Controls, 
+  Node, 
+  addEdge, 
+  useEdgesState, 
+  useNodesState 
+} from 'reactflow';
 import 'reactflow/dist/style.css';
 import { zinc } from "tailwindcss/colors";
 import './global.css'
 import ContetntSquare from './components/nodes/content-square';
 import DefaultEdge from './components/edges/Default-edge';
 import * as Toolbar from '@radix-ui/react-toolbar';
-
+import ButtonSquare from './components/nodes/buttons-square';
+import ActionSquare from './components/nodes/action-square';
+import ConditionSquare from './components/nodes/conditions-square';
+import ConnectionSquare from './components/nodes/connection-square';
+import RandomSquare from './components/nodes/randon-square';
+import DelaySquare from './components/nodes/delay-square';
+import IntegrationSquare from './components/nodes/integration-square';
+import {AiFillAlert, AiOutlineArrowsAlt, AiOutlineClockCircle} from 'react-icons/ai'
+import {BiBookContent} from 'react-icons/bi'
+import {BsLightningChargeFill, BsArrowLeftRight, BsArrowsAngleContract, BsGraphUp} from 'react-icons/bs'
 /*
   Notes: 
   Nodes = Tudo que vai aparecer em tela(Pode ter seu próprio estilo e configuração),
@@ -15,6 +34,13 @@ import * as Toolbar from '@radix-ui/react-toolbar';
 
 const NODE_TYPES = {
   square: ContetntSquare,
+  button: ButtonSquare,
+  action: ActionSquare,
+  condition: ConditionSquare,
+  connection: ConnectionSquare,
+  random: RandomSquare,
+  delay: DelaySquare,
+  integration: IntegrationSquare,
 }
 
 const EDGE_TYPES = {
@@ -51,23 +77,24 @@ function App() {
     return setEdges(edges => addEdge(connection, edges))
   }, [])
 
-  function addSquareNode() {
+  function addSquareNode(type: string) {
     setNodes(nodes => [
       ...nodes,
       {
         id: crypto.randomUUID(),
-      type: 'square',
-      position: {
-        x: 750,
-        y: 350,
-      },
-      data: {}
+        type: type,
+        position: {
+          x: 750,
+          y: 350,
+        },
+        data: {}
       }
     ])
   }
  
   return (
     <div className='w-screen h-screen'>
+      
       <ReactFlow 
       nodeTypes={NODE_TYPES}
       edgeTypes={EDGE_TYPES}
@@ -82,23 +109,72 @@ function App() {
       }}
       >
         <Background
-          gap={12}
-          size={2}
-          color={zinc[200]}
+          gap={1}
+          size={10}
+          color={zinc[300]}
         />
         <Controls />
       </ReactFlow>
-
-      <Toolbar.Root 
-      className='fixed bottom-20 left-1/2 -translate-x-1/2 bg-white rounded-2xl shadow-lg border border-zinc-300 px-8 h-20 w-96 overflow-hidden'
-      >
-        <Toolbar.Button 
-          className='w-32 h-32 mt-6 transition-transform hover:-translate-y-2 bg-violet-500 rounded'
-          onClick={addSquareNode}
+      <Toolbar.Root className='fixed flex top-20 left-1/2 -translate-x-1/2 bg-white rounded-2xl shadow-lg border border-zinc-300 px-8 h-24 w-4/6 overflow-hidden'>
+        <Toolbar.Button
+        className='h-14 w-20 mr-6  rounded-lg bg-green-300  mt-4'
+        onClick={() => addSquareNode('square')}
         >
-
+          Conteúdo 
+          <BiBookContent className='ml-8'/>
+        </Toolbar.Button>
+        <Toolbar.Button
+        className='h-14 w-20 mb-2 mr-6 bg-green-300 mt-4 rounded-lg'
+        onClick={() => addSquareNode('button')}
+        >
+          Botões
+          <AiFillAlert className='ml-7'/>
+        </Toolbar.Button>
+        <Toolbar.Button
+        className='h-14 w-20 mr-6 bg-green-300 mt-4 rounded-lg houver:mt-4'
+        onClick={() => addSquareNode('action')}
+        >
+          Ação
+          <BsLightningChargeFill className='ml-7'/>
+        </Toolbar.Button>
+        <Toolbar.Button
+        className='h-14 w-20 mr-6 bg-green-300 mt-4 rounded-lg houver:mt-4'
+        onClick={() => addSquareNode('condition')}
+        >
+          <p>Condição</p>
+          <BsArrowLeftRight className='ml-7'/>
+        </Toolbar.Button>
+        <Toolbar.Button
+        className='h-14 w-20 mr-6 bg-green-300 mt-4 rounded-lg houver:mt-4'
+        onClick={() => addSquareNode('connection')}
+        >
+          Conexão
+          <BsArrowsAngleContract className='ml-7'/>
+          
+        </Toolbar.Button>
+        <Toolbar.Button
+        className='h-14 w-28 mr-6 bg-green-300 mt-4 rounded-lg houver:mt-4'
+        onClick={() => addSquareNode('random')}
+        >
+          Randomização
+          <AiOutlineArrowsAlt className='ml-11'/>
+        </Toolbar.Button>
+        <Toolbar.Button
+        className='h-14 w-20 mr-6 bg-green-300 mt-4 rounded-lg houver:mt-4'
+        onClick={() => addSquareNode('delay')}
+        >
+          Delay
+          <AiOutlineClockCircle className='ml-8'/>
+        </Toolbar.Button>
+        <Toolbar.Button
+        className='h-14 w-20 mr-6 bg-green-300 mt-4 rounded-lg houver:mt-4'
+        onClick={() => addSquareNode('integration')}
+        >
+          Integração
+          <BsGraphUp className='ml-7'/>
         </Toolbar.Button>
       </Toolbar.Root>
+      
     </div>
   );
 }
