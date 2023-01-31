@@ -10,8 +10,8 @@ import ReactFlow,
   useEdgesState, 
   useNodesState 
 } from 'reactflow';
-import 'reactflow/dist/style.css';
 import { zinc } from "tailwindcss/colors";
+import 'reactflow/dist/style.css';
 import './global.css'
 import ContetntSquare from './components/nodes/content-square';
 import DefaultEdge from './components/edges/Default-edge';
