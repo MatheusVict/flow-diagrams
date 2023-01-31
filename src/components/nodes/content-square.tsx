@@ -1,13 +1,22 @@
+import { NodeResizer } from '@reactflow/node-resizer';
 import React from 'react'
 import { NodeProps, Handle, Position } from 'reactflow';
+import '@reactflow/node-resizer/dist/style.css';
 
 /*
   Position é um enum, facilita em que ponto do elemento se coloca os handles(As conexões)
 */
 
-const ContetntSquare = (props: NodeProps) => {
+const ContetntSquare = ({ selected }: NodeProps) => {
   return (
-    <div className='bg-violet-500 rounded w-[200px] h-[200px]'>
+    <div className='bg-violet-500 rounded w-full h-full min-w-[200px] min-h-[200px]'>
+      <NodeResizer 
+      minHeight={200}
+      minWidth={200}
+      isVisible={selected}
+      lineClassName='border-blue-400'
+      handleClassName='h-3 w-3 bg-white border-2 rounded border-blue-400'
+      />
         <Handle
          id='right'
          type='source'
